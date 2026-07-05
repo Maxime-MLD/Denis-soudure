@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+// TODO: remplacer par le vrai domaine
+const SITE_URL = 'https://www.denisoudure-EXEMPLE.fr';
+
+const {
+  title = 'DeniSoudure — Artisan soudeur à Roanne | Caisses à chien sur-mesure',
+  description = 'Artisan soudeur à Roanne (Loire) : fabrication sur-mesure de caisses à chien, escaliers métalliques, verrières, portails et brise-vues. Travail soigné, 100% fabrication française.',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? SITE_URL);
+const ogImage = new URL('/og-image.jpg', Astro.site ?? SITE_URL);
+
+/* Schema.org — LocalBusiness (HomeAndConstructionBusiness)
+   TODO: remplacer adresse, téléphone et horaires par les vraies coordonnées */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: 'DeniSoudure',
+  description:
+    'Artisan soudeur spécialisé dans la fabrication sur-mesure de caisses à chien, escaliers, verrières, portails et brise-vues.',
+  url: SITE_URL,
+  image: ogImage.toString(),
+  telephone: '+33 4 00 00 00 00',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '1 rue de la Soudure',
+    addressLocality: 'Roanne',
+    postalCode: '42300',
+    addressRegion: 'Loire',
+    addressCountry: 'FR',
+  },
+  areaServed: ['Roanne', 'Roannais', 'Loire'],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+  ],
+  priceRange: '€€',
+};
+---
+
+<!doctype html>
+<html lang="fr" class="has-anim">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="DeniSoudure" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Preload fonts critiques -->
+    <link rel="preload" href="/fonts/clash-display-bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="bg-black text-white">
+    <slot />
+    <script>
+      import '../scripts/animations';
+    </script>
+  </body>
+</html>

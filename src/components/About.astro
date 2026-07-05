@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import coffret from '../assets/images/coffret.png';
+import fenetre from '../assets/images/fenetre.png';
+import porte from '../assets/images/porte.png';
+import face from '../assets/images/face.png';
+
+interface Block {
+  kicker: string;
+  title: string;
+  text: string;
+  image: ImageMetadata | null;
+  alt: string;
+  imageRight: boolean;
+}
+
+const blocks: Block[] = [
+  {
+    kicker: 'Sur-mesure',
+    title: 'Coffret de rangement, aération coulissante... je peux tout faire',
+    text: "Coffret de rangement à l'aération tout est fait sur-mesure, adapté à votre pick-up pour votre caisse à chien.",
+    image: coffret,
+    alt: 'Coffre de rangement métallique sur-mesure fabriqué par DeniSoudure à Roanne',
+    imageRight: true,
+  },
+  {
+    kicker: 'Matériaux',
+    title: "De l'aluminium et de l'acier choisis pour durer",
+    text: "Tôle aluminium larmée, profilés acier, visserie inox : les matériaux sont sélectionnés pour résister aux chocs, à l'humidité et aux années de terrain. Les soudures sont pleines, pas pointées — c'est ce qui fait la différence dans le temps.",
+    image: fenetre,
+    alt: 'Fenêtre métallique sur-mesure en acier réalisée par DeniSoudure à Roanne',
+    imageRight: false,
+  },
+  {
+    kicker: 'Fabrication',
+    title: "Découpé, plié et soudé dans l'atelier, à Roanne",
+    text: "Tout est fabriqué à l'atelier : découpe, pliage, soudure TIG/MIG, finitions. Aucune sous-traitance, aucun import. Vous savez qui fabrique, où, et comment — et vous pouvez venir voir votre pièce en cours de réalisation.",
+    image: porte,
+    alt: 'Porte métallique sur-mesure fabriquée par DeniSoudure à Roanne',
+    imageRight: true,
+  },
+  {
+    kicker: 'Robustesse',
+    title: 'Pensé pour le terrain, fini pour durer',
+    text: "Angles renforcés, charnières soudées, fermetures de qualité : une caisse à chien vit dehors, sur les routes et dans les chemins. Chaque réalisation est contrôlée et testée avant livraison, avec les finitions qui protègent le métal.",
+    image: face,
+    alt: 'Caisse à chien sur-mesure terminée, réalisée par DeniSoudure à Roanne',
+    imageRight: false,
+  },
+];
+---
+
+<section id="a-propos" class="container-site section-space">
+  {/* Conteneur commun (max-width 1700px centré à partir de lg) : le H2 et les blocs
+      partagent cette largeur, donc le titre est aligné avec les blocs. */}
+  <div class="lg:mx-auto lg:max-w-[1700px]">
+    <h2 data-anim="up" class="max-w-2xl text-3xl md:text-5xl">
+      Le savoir-faire d'un artisan, au service de votre projet
+    </h2>
+
+    <div class="mt-16 flex flex-col gap-20 md:mt-24 md:gap-28">
+      {
+        blocks.map((block) => (
+          <article class="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+            {/* Sous lg : colonne unique, image au-dessus du texte + liseré horizontal ;
+                à partir de lg : liseré vertical toujours à gauche du texte. */}
+            <div
+              data-anim={block.imageRight ? 'left' : 'right'}
+              class:list={[
+                'order-2 max-w-lg border-orange border-t-[3px] pt-6 lg:border-t-0 lg:border-l-[3px] lg:pt-0 lg:pl-8',
+                block.imageRight ? 'lg:order-1' : 'lg:order-2',
+              ]}
+            >
+            <p class="text-sm font-semibold uppercase tracking-widest text-orange">{block.kicker}</p>
+            <h3 class="mt-3 text-2xl font-semibold md:text-3xl">{block.title}</h3>
+            <p class="mt-5 leading-relaxed text-slate">{block.text}</p>
+          </div>
+          <div
+            data-anim={block.imageRight ? 'right' : 'left'}
+            class:list={['order-1', block.imageRight ? 'lg:order-2' : 'lg:order-1']}
+          >
+            {block.image ? (
+              <Image
+                src={block.image}
+                alt={block.alt}
+                widths={[400, 800, 1200]}
+                sizes="(min-width: 1024px) 40vw, 90vw"
+                format="webp"
+                class="aspect-[4/3] w-full rounded-sm object-cover"
+              />
+            ) : (
+              /* TODO: remplacer par une vraie photo (astro:assets <Image />) */
+              <div
+                class="flex aspect-[4/3] items-center justify-center rounded-sm bg-charcoal"
+                role="img"
+                aria-label={block.alt}
+              >
+                <span class="px-6 text-center text-sm text-slate">Placeholder — Caisse terminée</span>
+              </div>
+            )}
+          </div>
+        </article>
+      ))
+    }
+    </div>
+  </div>
+</section>

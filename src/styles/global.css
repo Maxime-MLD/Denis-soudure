@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Fonts — self-hosted (Fontshare / Google Fonts)
+------------------------------------------------------------------- */
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/clash-display-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/clash-display-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens — Tailwind 4, config CSS-first
+------------------------------------------------------------------- */
+@theme {
+  --color-*: initial;
+  --color-black: #1a1c1f;
+  --color-charcoal: #3a3f45;
+  --color-slate: #6e7781;
+  --color-orange: #ff6a2a;
+  --color-white: #f2f2f0;
+  --color-transparent: transparent;
+
+  --font-display: "Clash Display", "Arial Black", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    scroll-behavior: auto; /* Lenis gère le scroll */
+    /* Les éléments translatés avant leur animation (About ±50px) ne doivent
+       jamais créer de scroll horizontal parasite */
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-orange);
+    color: var(--color-black);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Menu mobile / lightbox ouverts : bloque le scroll natif (Lenis stoppé côté JS) */
+  html.menu-open,
+  html.menu-open body,
+  html.lightbox-open,
+  html.lightbox-open body {
+    overflow: hidden;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Composants / utilitaires maison
+------------------------------------------------------------------- */
+/* Marge globale du site : 80px desktop, réduite en clamp() sur mobile */
+@utility container-site {
+  padding-inline: clamp(20px, 5vw, 80px);
+}
+
+/* Espace vertical généreux entre sections (réduit ~de moitié sur mobile) */
+@utility section-space {
+  padding-block: clamp(64px, 10vw, 150px);
+}
+
+/* Hauteur du Hero : 100svh avec fallback 100vh pour les anciens navigateurs */
+@utility min-h-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Masque la scrollbar (tabs en scroll horizontal sur mobile) */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* CTA "designer" : soulignement orange qui s'étend de gauche à droite au hover,
+   jusqu'à la largeur du texte. Le texte, lui, ne change pas de couleur. */
+@utility cta-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-white);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 3px;
+    background-color: var(--color-orange);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-underline::after {
+    transition: none;
+  }
+}
+
+/* Etat initial des éléments animés — évite le flash avant GSAP.
+   Neutralisé si prefers-reduced-motion ou si JS ne tourne pas. */
+@media (prefers-reduced-motion: no-preference) {
+  html.has-anim [data-anim] {
+    opacity: 0;
+  }
+}

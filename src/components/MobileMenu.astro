@@ -1,0 +1,55 @@
+---
+const links = [
+  { href: '/#accueil', label: 'Accueil' },
+  { href: '/#a-propos', label: 'À propos' },
+  { href: '/#realisations', label: 'Réalisations' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<!-- Burger (visible sous lg) — l'ouverture/fermeture est gérée dans scripts/animations.ts -->
+<button
+  type="button"
+  data-menu-toggle
+  aria-expanded="false"
+  aria-controls="mobile-menu"
+  aria-label="Ouvrir le menu"
+  class="group relative z-50 -mr-2 flex h-11 w-11 cursor-pointer items-center justify-center lg:hidden"
+>
+  <span class="relative block h-4 w-6" aria-hidden="true">
+    <span
+      class="absolute left-0 top-1/2 -mt-px block h-0.5 w-6 -translate-y-1 bg-white transition-transform duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-45"
+    ></span>
+    <span
+      class="absolute left-0 top-1/2 -mt-px block h-0.5 w-6 translate-y-1 bg-white transition-transform duration-300 group-aria-expanded:translate-y-0 group-aria-expanded:-rotate-45"
+    ></span>
+  </span>
+</button>
+
+<!-- Panneau plein écran sombre -->
+<div
+  id="mobile-menu"
+  data-mobile-menu
+  class="invisible fixed inset-0 z-40 bg-black/95 opacity-0 backdrop-blur-lg lg:hidden"
+>
+  <nav class="container-site flex h-full flex-col justify-center" aria-label="Navigation mobile">
+    <ul class="flex flex-col gap-6">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              data-menu-link
+              href={link.href}
+              class="font-display text-4xl font-semibold text-white transition-colors duration-200 hover:text-orange"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a data-menu-link href="/#contact" class="cta-underline mt-12 self-start text-lg">
+      Demander un devis
+    </a>
+  </nav>
+</div>

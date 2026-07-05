@@ -1,0 +1,19 @@
+# DeniSoudure
+
+> Portfolio de DeniSoudure, artisan soudeur basé à Roanne (Loire, France), spécialisé dans la
+> fabrication sur-mesure de caisses à chien pour véhicules, ainsi que d'escaliers métalliques,
+> verrières, portails et brise-vues. Fabrication 100% française, réalisée en atelier à Roanne.
+
+## Activité
+
+- Spécialité principale : caisses à chien sur-mesure (aluminium / acier) pour pick-up et utilitaires
+- Autres fabrications : escaliers, verrières, portails, brise-vues
+- Zone d'intervention : Roanne, le Roannais et le département de la Loire (42)
+- Devis gratuit sur demande via le formulaire de contact
+
+## Pages principales
+
+- [Accueil](https://www.denisoudure-EXEMPLE.fr/) : présentation de l'artisan, savoir-faire, aperçu des réalisations
+- [Réalisations](https://www.denisoudure-EXEMPLE.fr/realisations) : galerie complète filtrable par catégorie (brise-vue, caisse à chien, escalier, portails, verrière)
+
+<!-- TODO: remplacer par le vrai domaine -->

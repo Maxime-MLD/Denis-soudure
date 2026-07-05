@@ -1,0 +1,38 @@
+---
+import RealisationCard from './RealisationCard.astro';
+import Lightbox from './Lightbox.astro';
+import { CATEGORIES, realisations } from '../data/realisations';
+---
+
+<section id="realisations" class="container-site section-space">
+  <h2 data-anim="up" class="max-w-2xl text-3xl md:text-5xl">Mes réalisations</h2>
+  <p data-anim="up" class="mt-5 max-w-xl leading-relaxed text-slate">
+    Un aperçu des dernières pièces sorties de l'atelier — chaque projet est unique, fabriqué à la
+    demande.
+  </p>
+
+  <div class="mt-16 flex flex-col gap-20">
+    {
+      CATEGORIES.map((category) => (
+        <div>
+          <h3 data-anim="up" class="text-xl font-semibold md:text-2xl">
+            <span class="text-orange">/</span> {category}
+          </h3>
+          <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {realisations
+              .filter((r) => r.category === category)
+              .map((realisation) => (
+                <RealisationCard realisation={realisation} />
+              ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div data-anim="up" class="mt-20 text-center">
+    <a href="/realisations" class="cta-underline text-lg">Voir toutes les réalisations</a>
+  </div>
+</section>
+
+<Lightbox />

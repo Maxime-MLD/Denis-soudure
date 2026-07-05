@@ -1,0 +1,70 @@
+---
+const year = new Date().getFullYear();
+
+const links = [
+  { href: '/#accueil', label: 'Accueil' },
+  { href: '/#a-propos', label: 'À propos' },
+  { href: '/#realisations', label: 'Réalisations' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<footer class="mt-10 overflow-hidden">
+  <div class="container-site py-8">
+   <div class="lg:mx-auto lg:max-w-[1700px]">
+    <!-- Liens de navigation -->
+    <nav
+      class="flex flex-wrap justify-center gap-x-10 gap-y-3"
+      aria-label="Navigation de pied de page"
+    >
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-orange"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="my-8 border-t border-slate/30" aria-hidden="true"></div>
+
+    <!-- Copyright à gauche / crédit à droite -->
+    <div class="flex flex-col items-center gap-3 text-sm text-slate md:flex-row md:justify-between">
+      <p>© {year} DeniSoudure — Tous droits réservés</p>
+      <p>
+        Site créé par{' '}
+        <a
+          href="https://www.mld-dev.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-medium text-white/80 transition-colors hover:text-orange"
+        >
+          MLD Dev
+        </a>
+      </p>
+    </div>
+   </div>
+  </div>
+
+  <!-- Watermark géant full-bleed : le D touche le bord gauche, le E le bord droit -->
+  <div class="w-full pt-8" aria-hidden="true">
+    <svg
+      viewBox="0 0 1000 150"
+      class="block w-full"
+      preserveAspectRatio="xMidYMax meet"
+      role="presentation"
+    >
+      <text
+        x="-5"
+        y="149"
+        textLength="1000"
+        lengthAdjust="spacingAndGlyphs"
+        class="fill-charcoal font-display"
+        style="font-size: 150px; font-weight: 700; letter-spacing: -0.03em;"
+      >Deni<tspan class="fill-orange">S</tspan>oudure</text>
+    </svg>
+  </div>
+</footer>

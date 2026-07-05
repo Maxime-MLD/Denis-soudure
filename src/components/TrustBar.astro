@@ -1,0 +1,37 @@
+---
+interface Stat {
+  prefix: string;
+  target: number;
+  suffix: string;
+  label: string;
+}
+
+const stats: Stat[] = [
+  { prefix: '+', target: 10, suffix: ' ans', label: "d'expérience" },
+  { prefix: '+', target: 100, suffix: '', label: 'réalisations' },
+  { prefix: '', target: 100, suffix: '%', label: 'sur-mesure' },
+  { prefix: '', target: 100, suffix: '%', label: 'Fabrication Française' },
+];
+---
+
+<section class="container-site border-y border-slate/30 py-14" aria-label="Chiffres clés">
+  <dl class="grid grid-cols-2 gap-y-10 lg:mx-auto lg:max-w-[1700px] lg:grid-cols-4 lg:gap-y-0">
+    {
+      stats.map((stat, i) => (
+        <div
+          data-anim="up"
+          class:list={[
+            'flex flex-col items-center gap-2 text-center',
+            i > 0 && 'lg:border-l lg:border-slate/30',
+            i % 2 === 1 && 'border-l border-slate/30 lg:border-l',
+          ]}
+        >
+          <dd class="font-display text-3xl font-bold md:text-4xl">
+            <Fragment set:html={stat.prefix ? `<span class="text-orange">${stat.prefix}</span>` : ''} /><span data-count-target={stat.target}>{stat.target}</span>{stat.suffix === '%' ? <span class="text-orange">%</span> : stat.suffix}
+          </dd>
+          <dt class="text-sm text-slate">{stat.label}</dt>
+        </div>
+      ))
+    }
+  </dl>
+</section>

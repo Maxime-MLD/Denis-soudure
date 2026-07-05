@@ -1,0 +1,52 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { Realisation } from '../data/realisations';
+
+interface Props {
+  realisation: Realisation;
+}
+
+const { realisation } = Astro.props;
+
+// Version large (WebP) pour la lightbox — générée seulement si une vraie photo existe
+const full = realisation.image
+  ? await getImage({ src: realisation.image, width: 1600, format: 'webp' })
+  : null;
+---
+
+<article data-category={realisation.category} class="group" data-anim="up">
+  <button
+    type="button"
+    data-lightbox-trigger
+    data-category={realisation.category}
+    data-full={full?.src ?? ''}
+    data-alt={realisation.alt}
+    data-title={realisation.title}
+    aria-label={`Agrandir la réalisation : ${realisation.title}`}
+    class="block w-full cursor-pointer overflow-hidden rounded-sm"
+  >
+    {
+      realisation.image ? (
+        <Image
+          src={realisation.image}
+          alt={realisation.alt}
+          width={800}
+          height={600}
+          class="aspect-[4/3] w-full rounded-sm object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : (
+        <div
+          class="flex aspect-[4/3] w-full items-center justify-center rounded-sm bg-charcoal transition-colors duration-300 group-hover:bg-charcoal/70"
+          role="img"
+          aria-label={realisation.alt}
+        >
+          <span class="px-4 text-center text-sm text-slate">Placeholder — {realisation.title}</span>
+        </div>
+      )
+    }
+  </button>
+  <div class="mt-4 flex items-baseline justify-between gap-4">
+    <h3 class="font-display text-lg font-semibold">{realisation.title}</h3>
+    <p class="text-xs uppercase tracking-widest text-slate">{realisation.category}</p>
+  </div>
+</article>

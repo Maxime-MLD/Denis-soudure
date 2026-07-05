@@ -1,0 +1,52 @@
+---
+import MobileMenu from './MobileMenu.astro';
+
+const links = [
+  { href: '/#accueil', label: 'Accueil' },
+  { href: '/#a-propos', label: 'À propos' },
+  { href: '/#realisations', label: 'Réalisations' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<!-- Le fond + blur vivent sur un enfant : un backdrop-filter (ou transform) sur le header
+     en ferait le containing block du panneau mobile en position fixed. -->
+<header data-navbar class="group fixed inset-x-0 top-0 z-50">
+  <div
+    class="absolute inset-0 transition-colors duration-300 group-[.is-scrolled]:bg-black/80 group-[.is-scrolled]:backdrop-blur-md"
+    aria-hidden="true"
+  >
+  </div>
+  <nav class="container-site relative" aria-label="Navigation principale">
+   <div class="flex items-center justify-between py-5 lg:mx-auto lg:max-w-[1700px]">
+    <a
+      href="/"
+      class="relative z-50 font-display text-2xl font-bold tracking-tight"
+      aria-label="DeniSoudure — accueil"
+    >
+      D<span class="text-orange">S</span>
+    </a>
+
+    <ul class="hidden items-center gap-10 lg:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm font-medium text-white/80 transition-colors duration-200 hover:text-orange"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="hidden lg:block">
+      <a href="/#contact" class="cta-underline pb-1.5! text-sm">Demander un devis</a>
+    </div>
+
+    <MobileMenu />
+   </div>
+  </nav>
+</header>

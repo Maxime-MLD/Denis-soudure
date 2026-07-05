@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: remplacer par le vrai domaine
+Sitemap: https://www.denisoudure-EXEMPLE.fr/sitemap-index.xml

@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/hero_pickup.png';
+---
+
+<section id="accueil" class="relative flex min-h-hero flex-col overflow-hidden" data-hero>
+  <!-- Image plein écran -->
+  <Image
+    src={heroImage}
+    alt="Pick-up équipé d'une caisse à chien en aluminium fabriquée sur-mesure par DeniSoudure"
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <!-- Overlay noir + dégradé vers le bas pour raccorder à la section suivante -->
+  <div class="absolute inset-0 bg-black/45" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black"
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Watermark géant "DeniSoudure" — deux moitiés qui s'assemblent -->
+  <div
+    class="pointer-events-none relative mt-24 flex justify-center overflow-hidden whitespace-nowrap font-display text-[clamp(3rem,11vw,10rem)] font-bold leading-none tracking-tight text-white md:mt-28"
+    aria-hidden="true"
+  >
+    <span data-anim="watermark-left" class="inline-block">Deni</span><span
+      data-anim="watermark-right"
+      class="inline-block"><span class="text-orange">S</span>oudure</span
+    >
+  </div>
+
+  <!-- H1 + sous-titre -->
+  <div class="container-site relative mt-auto pb-24 md:pb-32">
+    <div class="lg:mx-auto lg:max-w-[1700px]">
+      <h1 data-anim="up" class="max-w-3xl text-4xl leading-tight md:text-6xl">
+        Votre artisan soudeur <br>à Roanne
+      </h1>
+      <p data-anim="up" class="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:text-lg">
+        De la conception à la fabrication, chaque pièce est pensée et soudée sur-mesure pour tout vos projets.
+      </p>
+      <a data-anim="up" href="/#realisations" class="cta-underline mt-10">Découvrir mes réalisations</a>
+    </div>
+  </div>
+</section>

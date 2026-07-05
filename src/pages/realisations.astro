@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import RealisationCard from '../components/RealisationCard.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import { CATEGORIES, realisations } from '../data/realisations';
+
+const filters = ['Toutes', ...CATEGORIES] as const;
+---
+
+<Layout
+  title="Réalisations — DeniSoudure | Caisses à chien, escaliers, verrières à Roanne"
+  description="Découvrez les réalisations sur-mesure de DeniSoudure à Roanne : caisses à chien, escaliers métalliques, verrières, portails et brise-vues. Fabrication artisanale française."
+>
+  <Navbar />
+  <main class="pt-28 md:pt-36">
+    <section class="container-site pb-24 md:pb-36">
+      <h1 data-anim="up" class="max-w-3xl text-4xl md:text-6xl">Toutes mes réalisations</h1>
+      <p data-anim="up" class="mt-6 max-w-xl leading-relaxed text-slate">
+        Filtrez par type de projet pour découvrir le travail de l'atelier.
+      </p>
+
+      <!-- Filtres par catégorie -->
+      <div
+        data-anim="up"
+        data-filters
+        class="scrollbar-none mt-12 flex gap-x-8 gap-y-4 overflow-x-auto pb-2 md:flex-wrap md:overflow-x-visible md:pb-0"
+        role="tablist"
+        aria-label="Filtrer les réalisations par catégorie"
+      >
+        {
+          filters.map((filter, i) => (
+            <button
+              type="button"
+              role="tab"
+              data-filter={filter}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              class="shrink-0 cursor-pointer whitespace-nowrap border-b-3 pb-2 font-display font-semibold text-slate transition-colors duration-200 hover:text-white aria-selected:text-white [&[aria-selected='true']]:border-orange [&[aria-selected='false']]:border-transparent"
+            >
+              {filter}
+            </button>
+          ))
+        }
+      </div>
+
+      <!-- Grille de cards -->
+      <div data-grid class="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {realisations.map((realisation) => <RealisationCard realisation={realisation} />)}
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+  <Lightbox />
+
+  <script>
+    import '../scripts/filters';
+  </script>
+</Layout>

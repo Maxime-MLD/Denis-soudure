@@ -1,0 +1,40 @@
+# build output
+dist/
+.output/
+
+# generated types & caches
+.astro/
+.vite/
+
+# dependencies
+node_modules/
+
+# variables d'environnement (secrets) — on garde .env.example versionné
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# gestionnaires de paquets
+.pnpm-store/
+.yarn/
+
+# macOS / Windows / éditeurs
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# divers
+*.local

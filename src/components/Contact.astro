@@ -1,0 +1,106 @@
+---
+/* TODO: remplacer les coordonnées placeholder (adresse, téléphone, email, horaires) */
+const infos = [
+  { label: 'Adresse', value: '1 rue de la Soudure, 42300 Roanne' },
+  { label: 'Téléphone', value: '04 00 00 00 00', href: 'tel:+33400000000' },
+  { label: 'Email', value: 'contact@denisoudure.fr', href: 'mailto:contact@denisoudure.fr' },
+  { label: 'Horaires', value: 'Lun – Ven : 8h00 – 18h00' },
+];
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+---
+
+<section id="contact" class="container-site section-space">
+  <div class="grid gap-16 md:grid-cols-2 md:gap-20 lg:mx-auto lg:max-w-[1700px]">
+    <!-- Colonne gauche : infos -->
+    <div data-anim="left">
+      <h2 class="text-3xl md:text-5xl">Parlons de votre projet</h2>
+      <p class="mt-5 max-w-md leading-relaxed text-slate">
+        Un projet de caisse à chien, d'escalier ou de portail ? Décrivez-le en quelques lignes, je
+        vous rappelle pour en parler et établir un devis gratuit.
+      </p>
+
+      <dl class="mt-12 flex flex-col gap-6">
+        {
+          infos.map((info) => (
+            <div class="flex flex-col gap-1">
+              <dt class="text-xs font-semibold uppercase tracking-widest text-orange">{info.label}</dt>
+              <dd>
+                {info.href ? (
+                  <a href={info.href} class="text-white/90 transition-colors hover:text-orange">
+                    {info.value}
+                  </a>
+                ) : (
+                  <span class="text-white/90">{info.value}</span>
+                )}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <!-- Colonne droite : formulaire Web3Forms -->
+    <form
+      data-anim="right"
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      class="flex flex-col gap-6"
+    >
+      <!-- TODO: remplacer par la vraie clé Web3Forms -->
+      <input type="hidden" name="access_key" value={web3formsKey} />
+      <input type="hidden" name="subject" value="Nouvelle demande de devis — DeniSoudure" />
+      <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />
+
+      <div class="flex flex-col gap-2">
+        <label for="name" class="text-sm font-medium">Nom</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          autocomplete="name"
+          class="rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
+          placeholder="Votre nom"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="email" class="text-sm font-medium">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          autocomplete="email"
+          class="rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
+          placeholder="votre@email.fr"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="phone" class="text-sm font-medium">Téléphone</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          autocomplete="tel"
+          class="rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
+          placeholder="06 00 00 00 00"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="message" class="text-sm font-medium">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows="5"
+          class="resize-y rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
+          placeholder="Décrivez votre projet (dimensions, véhicule, usage...)"></textarea>
+      </div>
+
+      <button type="submit" class="cta-underline mt-2 self-start text-lg">Envoyer ma demande</button>
+    </form>
+  </div>
+</section>
