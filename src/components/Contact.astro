@@ -1,8 +1,8 @@
 ---
 /* TODO: remplacer les coordonnées placeholder (adresse, téléphone, email, horaires) */
 const infos = [
-  { label: 'Adresse', value: '1 rue de la Soudure, 42300 Roanne' },
-  { label: 'Téléphone', value: '04 00 00 00 00', href: 'tel:+33400000000' },
+  // { label: 'Adresse', value: '1 rue de la Soudure, 42300 Roanne' },
+  { label: 'Téléphone', value: '04 00 00 00 00'},
   { label: 'Email', value: 'contact@denisoudure.fr', href: 'mailto:contact@denisoudure.fr' },
   { label: 'Horaires', value: 'Lun – Ven : 8h00 – 18h00' },
 ];
@@ -46,7 +46,6 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       method="POST"
       class="flex flex-col gap-6"
     >
-      <!-- TODO: remplacer par la vraie clé Web3Forms -->
       <input type="hidden" name="access_key" value={web3formsKey} />
       <input type="hidden" name="subject" value="Nouvelle demande de devis — DeniSoudure" />
       <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />

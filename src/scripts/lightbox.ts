@@ -9,7 +9,7 @@
 interface Slide {
   full: string;
   alt: string;
-  title: string;
+  category: string;
 }
 
 function initLightbox(): void {
@@ -62,12 +62,12 @@ function initLightbox(): void {
     } else {
       imgEl.classList.add('hidden');
       imgEl.removeAttribute('src');
-      placeholderLabel.textContent = `Placeholder — ${slide.title}`;
+      placeholderLabel.textContent = `Placeholder — ${slide.category}`;
       placeholderEl.classList.remove('hidden');
       placeholderEl.classList.add('flex');
     }
 
-    captionEl.textContent = slide.title;
+    captionEl.textContent = slide.category;
 
     const multiple = slides.length > 1;
     prevBtn.style.display = multiple ? '' : 'none';
@@ -80,7 +80,7 @@ function initLightbox(): void {
       .map((t) => ({
         full: t.dataset.full ?? '',
         alt: t.dataset.alt ?? '',
-        title: t.dataset.title ?? '',
+        category: t.dataset.category ?? '',
       }));
     if (slides.length === 0) return;
 

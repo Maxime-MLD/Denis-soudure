@@ -1,52 +1,56 @@
 ---
-import { Image, getImage } from 'astro:assets';
-import type { Realisation } from '../data/realisations';
+import type { RealisationItem } from '../data/realisations';
 
 interface Props {
-  realisation: Realisation;
+  realisation: RealisationItem;
+  /** Animation d'apparition au scroll. À désactiver sur la galerie filtrable
+      (/realisations) : le filtre révèle des cartes dont le reveal ne se déclenche
+      jamais, ce qui les laisserait invisibles (opacity 0). */
+  reveal?: boolean;
 }
 
-const { realisation } = Astro.props;
-
-// Version large (WebP) pour la lightbox — générée seulement si une vraie photo existe
-const full = realisation.image
-  ? await getImage({ src: realisation.image, width: 1600, format: 'webp' })
-  : null;
+const { realisation, reveal = true } = Astro.props;
+const { image, alt, title, category } = realisation;
 ---
 
-<article data-category={realisation.category} class="group" data-anim="up">
+<article data-category={category} class="group" data-anim={reveal ? 'up' : undefined}>
   <button
     type="button"
     data-lightbox-trigger
-    data-category={realisation.category}
-    data-full={full?.src ?? ''}
-    data-alt={realisation.alt}
-    data-title={realisation.title}
-    aria-label={`Agrandir la réalisation : ${realisation.title}`}
+    data-category={category}
+    data-full={image?.full ?? ''}
+    data-alt={alt}
+    data-title={title}
+    aria-label={`Agrandir la réalisation : ${title}`}
     class="block w-full cursor-pointer overflow-hidden rounded-sm"
   >
     {
-      realisation.image ? (
-        <Image
-          src={realisation.image}
-          alt={realisation.alt}
-          width={800}
-          height={600}
+      image ? (
+        <img
+          src={image.src}
+          srcset={image.srcset}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          width={image.width}
+          height={image.height}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          style={
+            image.lqip
+              ? `background-image:url(${image.lqip});background-size:cover;background-position:center`
+              : undefined
+          }
           class="aspect-[4/3] w-full rounded-sm object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
         <div
           class="flex aspect-[4/3] w-full items-center justify-center rounded-sm bg-charcoal transition-colors duration-300 group-hover:bg-charcoal/70"
           role="img"
-          aria-label={realisation.alt}
+          aria-label={alt}
         >
-          <span class="px-4 text-center text-sm text-slate">Placeholder — {realisation.title}</span>
+          <span class="px-4 text-center text-sm text-slate">Placeholder — {title}</span>
         </div>
       )
     }
   </button>
-  <div class="mt-4 flex items-baseline justify-between gap-4">
-    <h3 class="font-display text-lg font-semibold">{realisation.title}</h3>
-    <p class="text-xs uppercase tracking-widest text-slate">{realisation.category}</p>
-  </div>
 </article>

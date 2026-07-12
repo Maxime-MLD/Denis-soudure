@@ -1,7 +1,12 @@
 ---
 import RealisationCard from './RealisationCard.astro';
 import Lightbox from './Lightbox.astro';
-import { CATEGORIES, realisations } from '../data/realisations';
+import { CATEGORIES } from '../data/realisations';
+import { getRealisations } from '../lib/sanity';
+
+const realisations = await getRealisations();
+// N'afficher que les catégories qui contiennent au moins une réalisation
+const activeCategories = CATEGORIES.filter((c) => realisations.some((r) => r.category === c));
 ---
 
 <section id="realisations" class="container-site section-space">
@@ -13,7 +18,7 @@ import { CATEGORIES, realisations } from '../data/realisations';
 
   <div class="mt-16 flex flex-col gap-20">
     {
-      CATEGORIES.map((category) => (
+      activeCategories.map((category) => (
         <div>
           <h3 data-anim="up" class="text-xl font-semibold md:text-2xl">
             <span class="text-orange">/</span> {category}
@@ -21,6 +26,7 @@ import { CATEGORIES, realisations } from '../data/realisations';
           <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {realisations
               .filter((r) => r.category === category)
+              .slice(0, 4)
               .map((realisation) => (
                 <RealisationCard realisation={realisation} />
               ))}
@@ -31,7 +37,7 @@ import { CATEGORIES, realisations } from '../data/realisations';
   </div>
 
   <div data-anim="up" class="mt-20 text-center">
-    <a href="/realisations" class="cta-underline text-lg">Voir toutes les réalisations</a>
+    <a href="/realisations" class="cta-underline text-lg">Voir toutes mes réalisations</a>
   </div>
 </section>
 

@@ -5,9 +5,13 @@ import RealisationCard from '../components/RealisationCard.astro';
 import Lightbox from '../components/Lightbox.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import { CATEGORIES, realisations } from '../data/realisations';
+import { CATEGORIES } from '../data/realisations';
+import { getRealisations } from '../lib/sanity';
 
-const filters = ['Toutes', ...CATEGORIES] as const;
+const realisations = await getRealisations();
+// N'afficher que les onglets des catégories qui contiennent au moins une réalisation
+const activeCategories = CATEGORIES.filter((c) => realisations.some((r) => r.category === c));
+const filters = ['Toutes', ...activeCategories];
 ---
 
 <Layout
@@ -47,7 +51,7 @@ const filters = ['Toutes', ...CATEGORIES] as const;
 
       <!-- Grille de cards -->
       <div data-grid class="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {realisations.map((realisation) => <RealisationCard realisation={realisation} />)}
+        {realisations.map((realisation) => <RealisationCard realisation={realisation} reveal={false} />)}
       </div>
     </section>
 

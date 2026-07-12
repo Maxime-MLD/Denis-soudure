@@ -1,0 +1,28 @@
+---
+// Bannière sous-traitance pour les entreprises.
+// L'animation d'apparition (fade + slide-up) est pilotée par le système
+// centralisé `data-anim="up"` de src/scripts/animations.ts (aucune logique GSAP ici).
+---
+
+<section class="container-site">
+  <div class="lg:mx-auto lg:max-w-[1700px]">
+    <div
+      data-anim="up"
+      class="flex flex-col gap-8 rounded-sm border-l-[6px] border-orange bg-charcoal p-[clamp(28px,5vw,64px)] md:border-l-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16"
+    >
+      <div class="max-w-2xl">
+        <h3 class="font-display text-2xl font-semibold md:text-3xl">Vous êtes une entreprise ?</h3>
+        <p class="mt-4 leading-relaxed text-slate">
+          Professionnels, je propose mes services de sous-traitance pour vos réalisations métalliques. Disponible pour une intervention ponctuelle ou un partenariat durable, je vous apporte mon expertise pour répondre à vos exigences de qualité.
+        </p>
+      </div>
+
+      <a
+        href="/#contact"
+        class="shrink-0 rounded-md border-2 border-orange bg-orange px-6 py-4 text-lg transition duration-300 hover:scale-105 hover:border-[#dd5a20] hover:bg-[#dd5a20]"
+      >
+        Discutons de votre projet
+      </a>
+    </div>
+  </div>
+</section>

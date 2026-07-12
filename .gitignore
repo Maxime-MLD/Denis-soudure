@@ -5,6 +5,7 @@ dist/
 # generated types & caches
 .astro/
 .vite/
+.sanity/
 
 # dependencies
 node_modules/
@@ -35,6 +36,9 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# photos sources pour l'import Sanity (lourdes, pas à versionner)
+photos-import/
 
 # divers
 *.local

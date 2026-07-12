@@ -7,10 +7,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "import:photos": "node scripts/import-realisations.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.1",
+    "@sanity/client": "^7.23.0",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.0",
     "gsap": "^3.13.0",
