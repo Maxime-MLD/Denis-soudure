@@ -55,7 +55,7 @@ const blocks: Block[] = [
   {/* Conteneur commun (max-width 1700px centré à partir de lg) : le H2 et les blocs
       partagent cette largeur, donc le titre est aligné avec les blocs. */}
   <div class="lg:mx-auto lg:max-w-[1700px]">
-    <h2 data-anim="up" class="max-w-2xl text-3xl md:text-5xl">
+    <h2 data-anim="up" class="max-w-2xl text-3xl md:text-5xl ">
       Le savoir-faire d'un artisan, au service de votre projet
     </h2>
 
@@ -90,13 +90,12 @@ const blocks: Block[] = [
                 class="aspect-[4/3] w-full rounded-sm object-cover"
               />
             ) : (
-              /* TODO: remplacer par une vraie photo (astro:assets <Image />) */
+
               <div
                 class="flex aspect-[4/3] items-center justify-center rounded-sm bg-charcoal"
                 role="img"
                 aria-label={block.alt}
               >
-                <span class="px-6 text-center text-sm text-slate">Placeholder — Caisse terminée</span>
               </div>
             )}
           </div>

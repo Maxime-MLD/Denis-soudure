@@ -1,10 +1,9 @@
 ---
-/* TODO: remplacer les coordonnées placeholder (adresse, téléphone, email, horaires) */
 const infos = [
   // { label: 'Adresse', value: '1 rue de la Soudure, 42300 Roanne' },
-  { label: 'Téléphone', value: '04 00 00 00 00'},
-  { label: 'Email', value: 'contact@denisoudure.fr', href: 'mailto:contact@denisoudure.fr' },
-  { label: 'Horaires', value: 'Lun – Ven : 8h00 – 18h00' },
+  { label: 'Téléphone', value: '06 77 87 09 66'},
+  { label: 'Email', value: 'denisoudures@outlook.fr' },
+  { label: 'Horaires', value: 'Lun – Ven : 8h00 – 19h00' },
 ];
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ---
@@ -42,6 +41,8 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
     <!-- Colonne droite : formulaire Web3Forms -->
     <form
       data-anim="right"
+      data-contact-form
+      novalidate
       action="https://api.web3forms.com/submit"
       method="POST"
       class="flex flex-col gap-6"
@@ -58,9 +59,12 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           name="name"
           required
           autocomplete="name"
+          aria-describedby="name-error"
+          data-error-required="Veuillez indiquer votre nom."
           class="rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
           placeholder="Votre nom"
         />
+        <p id="name-error" data-error class="hidden text-sm text-danger"></p>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -71,9 +75,12 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           name="email"
           required
           autocomplete="email"
+          aria-describedby="email-error"
+          data-error-required="Veuillez indiquer votre email."
           class="rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
-          placeholder="votre@email.fr"
+          placeholder="jean@gmail.fr"
         />
+        <p id="email-error" data-error class="hidden text-sm text-danger"></p>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -95,11 +102,20 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           name="message"
           required
           rows="5"
+          aria-describedby="message-error"
+          data-error-required="Veuillez décrire votre projet."
           class="resize-y rounded-sm border border-slate/40 bg-charcoal/40 px-4 py-3 text-white placeholder:text-slate focus:border-orange focus:outline-none"
           placeholder="Décrivez votre projet (dimensions, véhicule, usage...)"></textarea>
+        <p id="message-error" data-error class="hidden text-sm text-danger"></p>
       </div>
 
       <button type="submit" class="cta-underline mt-2 self-start text-lg">Envoyer ma demande</button>
+
+      <p data-form-status role="status" aria-live="polite" class="hidden text-sm font-medium"></p>
     </form>
   </div>
 </section>
+
+<script>
+  import '../scripts/contact-form';
+</script>

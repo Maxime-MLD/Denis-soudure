@@ -8,7 +8,7 @@
   <div class="lg:mx-auto lg:max-w-[1700px]">
     <div
       data-anim="up"
-      class="flex flex-col gap-8 rounded-sm border-l-[6px] border-orange bg-charcoal p-[clamp(28px,5vw,64px)] md:border-l-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16"
+      class="card-texture flex flex-col gap-8 rounded-sm border-l-[6px] border-orange p-[clamp(28px,5vw,64px)] md:border-l-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16"
     >
       <div class="max-w-2xl">
         <h3 class="font-display text-2xl font-semibold md:text-3xl">Vous êtes une entreprise ?</h3>
@@ -19,10 +19,37 @@
 
       <a
         href="/#contact"
-        class="shrink-0 rounded-md border-2 border-orange bg-orange px-6 py-4 text-lg transition duration-300 hover:scale-105 hover:border-[#dd5a20] hover:bg-[#dd5a20]"
+        class="shrink-0 self-start rounded-md border-2 border-orange bg-orange px-6 py-4 text-lg transition duration-300 hover:scale-105 hover:border-[#dd5a20] hover:bg-[#dd5a20] lg:self-auto"
       >
         Discutons de votre projet
       </a>
     </div>
   </div>
 </section>
+
+<style>
+  /* Base un peu plus foncée que charcoal (#3a3f45) + texture (grain fin
+     en soft-light) et léger dégradé de profondeur pour casser l'aspect plat. */
+  .card-texture {
+    background-color: #2d3136;
+    background-image:
+      /* fine trame diagonale (métal brossé) */
+      repeating-linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 8px
+      ),
+      /* grain */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"),
+      /* dégradé de profondeur */
+      radial-gradient(130% 130% at 100% 0%, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0) 55%);
+    background-size:
+      auto,
+      180px 180px,
+      100% 100%;
+    background-repeat: repeat, repeat, no-repeat;
+    background-blend-mode: normal, soft-light, normal;
+  }
+</style>

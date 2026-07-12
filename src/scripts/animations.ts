@@ -150,6 +150,21 @@ function initHeroWatermark(): void {
 }
 
 /* ------------------------------------------------------------------
+   Hero — H1, sous-titre et CTA apparaissent ensemble AU CHARGEMENT
+   (et non au scroll : le CTA en bas du hero n'atteignait pas le seuil
+   du ScrollTrigger et ne se déclenchait qu'au premier scroll).
+------------------------------------------------------------------- */
+function initHeroContent(): void {
+  const items = document.querySelectorAll<HTMLElement>('#accueil [data-anim="up"]');
+  if (!items.length) return;
+  gsap.fromTo(
+    items,
+    { y: 40, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1, ease: 'power3.out', stagger: 0.1, delay: 0.2 },
+  );
+}
+
+/* ------------------------------------------------------------------
    Animations directionnelles au scroll :
    - data-anim="left"  : arrive de la gauche
    - data-anim="right" : arrive de la droite
@@ -176,7 +191,10 @@ function initScrollAnimations(): void {
       },
     );
 
-  document.querySelectorAll<HTMLElement>('[data-anim="up"]').forEach((el) => reveal(el, { y: 40 }));
+  document.querySelectorAll<HTMLElement>('[data-anim="up"]').forEach((el) => {
+    if (el.closest('#accueil')) return; // le hero est animé au chargement (initHeroContent)
+    reveal(el, { y: 40 });
+  });
 
   const directional = document.querySelectorAll<HTMLElement>(
     '[data-anim="left"], [data-anim="right"]',
@@ -238,6 +256,7 @@ function init(): void {
   initNavbar();
   initMobileMenu(lenis);
   initHeroWatermark();
+  initHeroContent();
   initScrollAnimations();
   initCounters();
 }
