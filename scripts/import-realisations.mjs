@@ -55,7 +55,7 @@ const BUSINESS = 'DeniSoudure';
 const LOCATION = 'Roanne';
 
 const CATEGORIES = [
-  'Brise-vue', 'Caisse à chien', 'Escalier', 'Garde-corps', 'Pergola', 'Portails', 'Verrière', 'Autres',
+  'Abris', 'Brise-vue', 'Caisse à chien', 'Escalier', 'Garde-corps', 'Portails', 'Verrière', 'Autres',
 ];
 const norm = (s) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -67,7 +67,7 @@ const ALIASES = {
   chenil: 'Caisse à chien', chenils: 'Caisse à chien',
   escalier: 'Escalier', escaliers: 'Escalier',
   gardecorps: 'Garde-corps', gardecorp: 'Garde-corps', gardescorps: 'Garde-corps',
-  pergola: 'Pergola', pergolas: 'Pergola',
+  abri: 'Abris', abris: 'Abris', pergola: 'Abris', pergolas: 'Abris',
   portail: 'Portails', portails: 'Portails',
   verriere: 'Verrière', verrieres: 'Verrière',
   autre: 'Autres', autres: 'Autres', divers: 'Autres',

@@ -4,11 +4,11 @@
  * Tant que Sanity n'est pas configuré, on affiche les placeholders ci-dessous.
  */
 export const CATEGORIES = [
+  "Abris",
   "Brise-vue",
   "Caisse à chien",
   "Escalier",
   "Garde-corps",
-  "Pergola",
   "Portails",
   "Verrière",
   "Autres",

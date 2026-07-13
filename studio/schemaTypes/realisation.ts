@@ -2,11 +2,11 @@ import { defineField, defineType } from 'sanity';
 
 /** Doit rester synchronisé avec CATEGORIES de src/data/realisations.ts */
 export const CATEGORIES = [
+  'Abris',
   'Brise-vue',
   'Caisse à chien',
   'Escalier',
   'Garde-corps',
-  'Pergola',
   'Portails',
   'Verrière',
   'Autres',
