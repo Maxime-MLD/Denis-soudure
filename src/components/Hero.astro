@@ -1,19 +1,33 @@
 ---
-import { Image } from 'astro:assets';
-import heroImage from '../assets/images/hero_pickup.png';
+import { getImage } from 'astro:assets';
+import heroDesktop from '../assets/images/hero_pickup.png';
+import heroMobile from '../assets/images/hero_mobil.png';
+
+const heroAlt =
+  "Pick-up équipé d'une caisse à chien en aluminium fabriquée sur-mesure par DeniSoudure";
+
+// Art direction : image cadrée mobile sous 768px, image desktop au-dessus.
+const desktop = await getImage({ src: heroDesktop, widths: [768, 1280, 1920], format: 'webp' });
+const mobile = await getImage({ src: heroMobile, widths: [480, 768, 1080], format: 'webp' });
 ---
 
 <section id="accueil" class="relative flex min-h-hero flex-col overflow-hidden" data-hero>
-  <!-- Image plein écran -->
-  <Image
-    src={heroImage}
-    alt="Pick-up équipé d'une caisse à chien en aluminium fabriquée sur-mesure par DeniSoudure"
-    class="absolute inset-0 h-full w-full object-cover"
-    widths={[768, 1280, 1920]}
-    sizes="100vw"
-    loading="eager"
-    fetchpriority="high"
-  />
+  <!-- Image plein écran (mobile / desktop) -->
+  <picture>
+    <source media="(max-width: 767px)" type="image/webp" srcset={mobile.srcSet.attribute} sizes="100vw" />
+    <img
+      src={desktop.src}
+      srcset={desktop.srcSet.attribute}
+      sizes="100vw"
+      alt={heroAlt}
+      width={heroDesktop.width}
+      height={heroDesktop.height}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
   <!-- Overlay noir + dégradé vers le bas pour raccorder à la section suivante -->
   <div class="absolute inset-0 bg-black/45" aria-hidden="true"></div>
   <div
