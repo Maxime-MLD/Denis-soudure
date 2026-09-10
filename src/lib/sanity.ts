@@ -5,17 +5,19 @@
  * - Sinon on récupère les documents `realisation` et on construit les URLs
  *   d'images optimisées (WebP + tailles responsives) via le CDN Sanity.
  */
-import { createClient } from '@sanity/client';
-import { createImageUrlBuilder } from '@sanity/image-url';
+import { createClient } from "@sanity/client";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import {
   CATEGORIES,
   placeholderRealisations,
   type Category,
   type RealisationItem,
-} from '../data/realisations';
+} from "../data/realisations";
 
-const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID as string | undefined;
-const dataset = (import.meta.env.PUBLIC_SANITY_DATASET as string | undefined) ?? 'production';
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID as
+  string | undefined;
+const dataset =
+  (import.meta.env.PUBLIC_SANITY_DATASET as string | undefined) ?? "production";
 // Optionnel : jeton de lecture si le dataset est privé (jamais exposé au client)
 const token = import.meta.env.SANITY_API_READ_TOKEN as string | undefined;
 
@@ -25,13 +27,15 @@ const client = isSanityConfigured
   ? createClient({
       projectId: projectId!,
       dataset,
-      apiVersion: '2024-01-01',
-      useCdn: !token,
+      apiVersion: "2024-01-01",
+      useCdn: false,
       token: token || undefined,
     })
   : null;
 
-const builder = isSanityConfigured ? createImageUrlBuilder({ projectId: projectId!, dataset }) : null;
+const builder = isSanityConfigured
+  ? createImageUrlBuilder({ projectId: projectId!, dataset })
+  : null;
 
 interface SanityRealisation {
   title: string;
@@ -53,7 +57,7 @@ export async function getRealisations(): Promise<RealisationItem[]> {
     | order(coalesce(order, 9999) asc, _createdAt desc){
       title,
       category,
-      "alt": coalesce(alt, image.alt, title),
+      "alt": coalesce(image.alt, title),
       image{ ..., asset->{ _id, metadata{ lqip } } }
     }`;
 
@@ -62,21 +66,26 @@ export async function getRealisations(): Promise<RealisationItem[]> {
     docs = await client.fetch<SanityRealisation[]>(query);
   } catch (error) {
     // En cas de souci réseau/config au build, on ne casse pas le site.
-    console.error('[sanity] Échec du chargement des réalisations, repli placeholders :', error);
+    console.error(
+      "[sanity] Échec du chargement des réalisations, repli placeholders :",
+      error,
+    );
     return placeholderRealisations;
   }
 
   return docs
     .filter((d) => CATEGORIES.includes(d.category))
     .map((d) => {
-      const base = builder.image(d.image).auto('format').fit('max');
+      const base = builder.image(d.image).auto("format").fit("max");
       return {
         category: d.category,
         title: d.title,
         alt: d.alt ?? `${d.title} — réalisation DeniSoudure à Roanne`,
         image: {
           src: base.width(800).url(),
-          srcset: DISPLAY_WIDTHS.map((w) => `${base.width(w).url()} ${w}w`).join(', '),
+          srcset: DISPLAY_WIDTHS.map(
+            (w) => `${base.width(w).url()} ${w}w`,
+          ).join(", "),
           full: base.width(1600).url(),
           width: 800,
           height: 600,
